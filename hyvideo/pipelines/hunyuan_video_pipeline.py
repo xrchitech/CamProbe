@@ -1345,7 +1345,7 @@ class HunyuanVideo_1_5_Pipeline(DiffusionPipeline):
                                 depth_x0 = midas(video_frames_x0[:, :, f_decode])
                                 depth_x0 = torch.nn.functional.interpolate(depth_x0, size=(lat_h,lat_w), mode='bilinear', align_corners=True)
                                 depth_list_x0.append(depth_x0)
-                        print('depth align corner=True')
+                        # print('depth align corner=True')
 
                         if debug_warp and debug_warp_dir is not None and get_rank() == 0:
                             step_debug_dir = os.path.join(debug_warp_dir, f"step_{i:03d}")
@@ -1395,10 +1395,10 @@ class HunyuanVideo_1_5_Pipeline(DiffusionPipeline):
 
                         if kwargs['warp_mode'] == 'custom':
                             R_list, t_list = kwargs['bank']
-                            print(f"warping frame {i} with mode {kwargs['warp_mode']}=custom")
+                            # print(f"warping frame {i} with mode {kwargs['warp_mode']}=custom")
                         elif kwargs['warp_mode'] == 'axis_infer':
                             R_delta, t_delta = kwargs['bank'](depth_list[0])
-                            print(f"warping frame {i} with mode {kwargs['warp_mode']}=axis_infer")
+                            # print(f"warping frame {i} with mode {kwargs['warp_mode']}=axis_infer")
                             R_delta = R_delta.to(x0_pred_before.dtype)
                             t_delta = t_delta.to(x0_pred_before.dtype)
                             R_cum = torch.eye(3).repeat(1,1,1).to(self.device).to(x0_pred_before.dtype)
@@ -1415,10 +1415,10 @@ class HunyuanVideo_1_5_Pipeline(DiffusionPipeline):
                         else:
                             if kwargs['warp_mode'] == 'Rt':
                                 R_delta, t_delta = kwargs['bank'](torch.tensor(kwargs['k']).unsqueeze(0))
-                                print(f"warping frame {i} with mode {kwargs['warp_mode']}=Rt")
+                                # print(f"warping frame {i} with mode {kwargs['warp_mode']}=Rt")
                             elif kwargs['warp_mode'] == 'axis':
                                 R_delta, t_delta = kwargs['bank'](torch.tensor(kwargs['k']).unsqueeze(0), depth_list[0])
-                                print(f"warping frame {i} with mode {kwargs['warp_mode']}=axis")
+                                # print(f"warping frame {i} with mode {kwargs['warp_mode']}=axis")
                             R_delta = R_delta.to(x0_pred_before.dtype)
                             t_delta = t_delta.to(x0_pred_before.dtype)
                             R_cum = torch.eye(3).repeat(1,1,1).to(self.device).to(x0_pred_before.dtype)
@@ -1436,7 +1436,7 @@ class HunyuanVideo_1_5_Pipeline(DiffusionPipeline):
 
                         warpeds = []
                         grid_debug = []
-                        print(f"warping frame {i} using depth norm = {depth_norm}")
+                        # print(f"warping frame {i} using depth norm = {depth_norm}")
                         for f in range(lat_t):
                             if depth_norm == 'raw':
                                 grid = depth_camera_grid(

@@ -213,16 +213,12 @@ class MiDaSSmall:
         print(">>> Using MiDaS for GEOMETRIC depth <<<")
         self.device = device
 
-        repo_path = "intel-isl_MiDaS_master"
         self.model = torch.hub.load(
-            repo_path,
+            "intel-isl/MiDaS",
             "MiDaS_small",
-            source="local",
-            pretrained=False
+            pretrained=True,
+            trust_repo=True,
         )
-        weight_path = "intel-isl_MiDaS_master/weights/midas_v21_small_256.pt"
-        state_dict = torch.load(weight_path, map_location="cpu")
-        self.model.load_state_dict(state_dict)
         self.model = self.model.to(device).eval()
 
         self.mean = torch.tensor([0.485, 0.456, 0.406], device=device).view(1,3,1,1)
