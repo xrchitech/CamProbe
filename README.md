@@ -1,6 +1,6 @@
 # Probing into Camera Control of Video Models
 
-[📄 arXiv](ARXIV_URL_PLACEHOLDER) | [🌐 Project Page](https://xrchitech.github.io/camprobe-page/)
+[📄 arXiv](https://arxiv.org/abs/2605.14815) | [🌐 Project Page](https://xrchitech.github.io/camprobe-page/)
 
 This repository contains the code for CamProbe in **Probing into Camera Control of Video Models**, built on top of **HunyuanVideo-1.5**. We extend the original image-to-video pipeline with camera-aware warping and diffusion-time updates, enabling controllable camera motion without any additional training.
 
